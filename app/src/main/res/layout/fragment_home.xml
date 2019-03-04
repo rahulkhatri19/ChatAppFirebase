@@ -1,0 +1,32 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#765CC8"
+    tools:context="in.belltechnology.chatappfirebase.fragment.HomeFragment">
+
+    <TextView
+        android:id="@+id/noUsersText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No Friend found!"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycleView"
+        android:scrollbars="vertical"/>
+
+
+   <!-- <ListView
+        android:id="@+id/usersList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTextYellow"
+        android:cacheColorHint="@android:color/white"
+        android:divider="@android:color/white"
+        android:entries="@android:color/white"
+        android:theme="@android:style/Widget.ListView.White" />-->
+
+</FrameLayout>

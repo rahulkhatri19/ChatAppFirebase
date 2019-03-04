@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Home"
+        app:showAsAction="never"
+        android:icon="@drawable/home_page_24"
+        android:id="@+id/home"/>
+    <item android:title="Friend Request"
+        app:showAsAction="never"
+        android:icon="@drawable/user_groups_24"
+        android:id="@+id/friendRequest"/>
+    <item android:title="Invitation"
+        app:showAsAction="never"
+        android:icon="@drawable/invite_24"
+        android:id="@+id/invitation"/>
+</menu>
