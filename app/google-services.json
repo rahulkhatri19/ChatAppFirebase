@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:795811685445:android:8f832cdea0066d97",
+        "mobilesdk_app_id": "1:795811685445:android:1196a4004d50467a8faf2c",
         "android_client_info": {
-          "package_name": "in.belltechnology.chatappfirebase"
+          "package_name": "in.rahul.chatappfirebase"
         }
       },
       "oauth_client": [
         {
-          "client_id": "795811685445-gl2gd17pa5jm642tpa3o6ff9snl20t2q.apps.googleusercontent.com",
+          "client_id": "795811685445-5fikse8g90496cpqupfg8stsa6485t4s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "in.belltechnology.chatappfirebase",
-            "certificate_hash": "3faea9cee5a97e80be9d68ff003038c8bc43ee6c"
+            "package_name": "in.rahul.chatappfirebase",
+            "certificate_hash": "908fb5311fd70366f8d5e53b91ebbfb735dba502"
           }
         },
         {
@@ -33,20 +33,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "795811685445-gml81gpdl4h4ksc0ieahi7716i0i8ei1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

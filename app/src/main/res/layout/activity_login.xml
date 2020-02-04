@@ -24,7 +24,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="BT Chat APP"
+                android:text="Chat APP"
                 android:gravity="center_horizontal"
                 android:typeface="serif"
                 android:textAlignment="center"

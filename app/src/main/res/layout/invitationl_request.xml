@@ -7,7 +7,7 @@
     android:weightSum="10"
     android:orientation="horizontal">
 
-    <in.belltechnology.chatappfirebase.CircularImage.CircleImageView
+    <in.rahul.chatappfirebase.CircularImage.CircleImageView
         android:id="@+id/profileImage"
         android:layout_width="0dp"
         android:layout_height="match_parent"

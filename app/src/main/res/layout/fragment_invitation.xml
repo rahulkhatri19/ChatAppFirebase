@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#765CC8"
-    tools:context="in.belltechnology.chatappfirebase.fragment.InvitationFragment">
+    tools:context="in.rahul.chatappfirebase.fragment.InvitationFragment">
 
     <TextView
         android:id="@+id/noUsersText"
