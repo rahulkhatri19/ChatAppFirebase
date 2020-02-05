@@ -19,7 +19,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import in.rahul.chatappfirebase.activity.Login;
+import in.rahul.chatappfirebase.activity.LoginActivity;
 import in.rahul.chatappfirebase.activity.UserDetails;
 import in.rahul.chatappfirebase.adapter.ViewPagerAdapter;
 import in.rahul.chatappfirebase.utility.SharedPreferencesUtils;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //  finish ();
 
-                Intent p = new Intent(MainActivity.this, Login.class);
+                Intent p = new Intent(MainActivity.this, LoginActivity.class);
                 p.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(p);
             }
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
        /* BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         if (savedInstanceState == null){
-            getFragmentManager().beginTransaction().add(R.id.frame, new HomeFragment()).commit();
+            getFragmentManager().beginTransaction().add(R.id.frame, new HomeFragment()).commit();getFragmentManager().beginTransaction().add(R.id.frame, new HomeFragment()).commit();
         }*/
     }
 
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //startActivity(new Intent(MainActivity.this, Login.class));
+        //startActivity(new Intent(MainActivity.this, LoginActivity.class));
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
         alert.setTitle("Exit").setMessage("Do you want to Exit From App").setPositiveButton("yes", new DialogInterface.OnClickListener() {
             @Override
@@ -135,7 +135,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (UserDetails.username.equals("")) {
-            startActivity(new Intent(MainActivity.this, Login.class));
+            Intent p = new Intent(MainActivity.this, LoginActivity.class);
+            p.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(p);
         }
 
     }

@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import in.rahul.chatappfirebase.CircularImage.CircleImageView;
-import in.rahul.chatappfirebase.Interface.ItemClickListener;
+import in.rahul.chatappfirebase.utility.CircleImageView;
+import in.rahul.chatappfirebase.interfaces.ItemClickListener;
 import in.rahul.chatappfirebase.R;
 
 /**

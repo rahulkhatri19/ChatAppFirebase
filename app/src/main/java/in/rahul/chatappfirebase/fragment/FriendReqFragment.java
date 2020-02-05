@@ -29,22 +29,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import in.rahul.chatappfirebase.CircularImage.CircleImageView;
+import in.rahul.chatappfirebase.utility.CircleImageView;
 import in.rahul.chatappfirebase.R;
 import in.rahul.chatappfirebase.activity.UserDetails;
-import in.rahul.chatappfirebase.model.FriendInvite;
+import in.rahul.chatappfirebase.model.FriendInviteModel;
 
 
 public class FriendReqFragment extends Fragment {
-  //  ListView usersList;
+    //  ListView usersList;
     private RecyclerView recyclerView;
     private DatabaseReference reference;
-    private FirebaseRecyclerAdapter<FriendInvite,UserHolder> adapter;
+    private FirebaseRecyclerAdapter<FriendInviteModel, UserHolder> adapter;
     TextView noUsers;
-    String userName="";
+    String userName = "";
     ArrayList<String> list = new ArrayList<>();
     int totalUsers = 0;
-    public String RequestStatus="0";
+    public String RequestStatus = "0";
     ProgressDialog progressDialog;
 
     @Override
@@ -53,9 +53,9 @@ public class FriendReqFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_friend_req, container, false);
 
-       // usersList = view.findViewById(R.id.usersList);
+        // usersList = view.findViewById(R.id.usersList);
         noUsers = view.findViewById(R.id.noUsersText);
-        recyclerView= view.findViewById(R.id.recycleView);
+        recyclerView = view.findViewById(R.id.recycleView);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading");
         progressDialog.show();
@@ -70,66 +70,54 @@ public class FriendReqFragment extends Fragment {
     }
 
     public void loadFriendData() {
-        reference=FirebaseDatabase.getInstance().getReference("profile");
+        reference = FirebaseDatabase.getInstance().getReference("profile");
         reference.keepSynced(true);
-        FirebaseRecyclerOptions<FriendInvite> options= new FirebaseRecyclerOptions.Builder<FriendInvite>().setQuery(reference,FriendInvite.class).setLifecycleOwner(getActivity()).build();
+        FirebaseRecyclerOptions<FriendInviteModel> options = new FirebaseRecyclerOptions.Builder<FriendInviteModel>().setQuery(reference, FriendInviteModel.class).setLifecycleOwner(getActivity()).build();
 
 
-            adapter = new FirebaseRecyclerAdapter<FriendInvite, UserHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<FriendInviteModel, UserHolder>(options) {
 
-                @Override
-                protected void onBindViewHolder(@NonNull final UserHolder holder, int position, @NonNull final FriendInvite model) {
+            @Override
+            protected void onBindViewHolder(@NonNull final UserHolder holder, int position, @NonNull final FriendInviteModel model) {
 
-                       UserDetails.friend = model.getId();
+                UserDetails.friend = model.getId();
 
-                       holder.setimage(model.getImage());
-                       holder.setname(model.getName());
-                       holder.setphoneNumber(model.getPhoneNumber());
-
-
-
-                       holder.setRequestButton("Send Request");
-                       holder.setCancelButton("Cancel Request");
+                holder.setimage(model.getImage());
+                holder.setname(model.getName());
+                holder.setphoneNumber(model.getPhoneNumber());
 
 
-                    final DatabaseReference alreadyFriend = FirebaseDatabase.getInstance().getReference("friend").child(UserDetails.username).child(UserDetails.friend);
-                    alreadyFriend.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild("id")){
-                                holder.setRequestButton("Friend");
-                                holder.requestBtn.setClickable(false);
-                            }
+                holder.setRequestButton("Send Request");
+                holder.setCancelButton("Cancel Request");
+
+
+                final DatabaseReference alreadyFriend = FirebaseDatabase.getInstance().getReference("friend").child(UserDetails.username).child(UserDetails.friend);
+                alreadyFriend.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild("id")) {
+                            holder.setRequestButton("Friend");
+                            holder.requestBtn.setClickable(false);
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
-                    final DatabaseReference requestStatusCheck = FirebaseDatabase.getInstance().getReference("friendReqGot").child(UserDetails.friend).child(UserDetails.username);
-                    requestStatusCheck.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild("reqStatus")) {
-                                RequestStatus = dataSnapshot.child("reqStatus").getValue
-                                        ().toString();
-                                if (RequestStatus.equals("1")){
-                                    holder.cancelBtn.setVisibility(View.VISIBLE);
-                                    holder.requestBtn.setVisibility(View.GONE);
-                                } else {
-                                    if (model.getId().equals(UserDetails.username)){
-                                        holder.requestBtn.setVisibility(View.GONE);
-                                        holder.cancelBtn.setVisibility(View.GONE);
-                                    } else {
-                                        holder.cancelBtn.setVisibility(View.GONE);
-                                        holder.requestBtn.setVisibility(View.VISIBLE);
-                                    }
-
-
-                                }
+                    }
+                });
+                final DatabaseReference requestStatusCheck = FirebaseDatabase.getInstance().getReference("friendReqGot").child(UserDetails.friend).child(UserDetails.username);
+                requestStatusCheck.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild("reqStatus")) {
+                            RequestStatus = dataSnapshot.child("reqStatus").getValue
+                                    ().toString();
+                            if (RequestStatus.equals("1")) {
+                                holder.cancelBtn.setVisibility(View.VISIBLE);
+                                holder.requestBtn.setVisibility(View.GONE);
                             } else {
-                                if (model.getId().equals(UserDetails.username)){
+                                if (model.getId().equals(UserDetails.username)) {
                                     holder.requestBtn.setVisibility(View.GONE);
                                     holder.cancelBtn.setVisibility(View.GONE);
                                 } else {
@@ -137,82 +125,90 @@ public class FriendReqFragment extends Fragment {
                                     holder.requestBtn.setVisibility(View.VISIBLE);
                                 }
 
+
                             }
+                        } else {
+                            if (model.getId().equals(UserDetails.username)) {
+                                holder.requestBtn.setVisibility(View.GONE);
+                                holder.cancelBtn.setVisibility(View.GONE);
+                            } else {
+                                holder.cancelBtn.setVisibility(View.GONE);
+                                holder.requestBtn.setVisibility(View.VISIBLE);
+                            }
+
                         }
+                    }
 
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
+                    }
+                });
 
-                       holder.requestBtn.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View v) {
+                holder.requestBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                               if (model.getId().equals(UserDetails.username)) {
-                                Toast.makeText(getActivity(),"You Can't Send Request to yourself",Toast.LENGTH_SHORT).show();
+                        if (model.getId().equals(UserDetails.username)) {
+                            Toast.makeText(getActivity(), "You Can't Send Request to yourself", Toast.LENGTH_SHORT).show();
 
-                               }
-                               else {
-                                   UserDetails.friend = model.getId();
-                                   holder.cancelBtn.setVisibility(View.VISIBLE);
-                                   holder.requestBtn.setVisibility(View.GONE);
-                                   final DatabaseReference friend = FirebaseDatabase.getInstance().getReference("friendReqGot");
+                        } else {
+                            UserDetails.friend = model.getId();
+                            holder.cancelBtn.setVisibility(View.VISIBLE);
+                            holder.requestBtn.setVisibility(View.GONE);
+                            final DatabaseReference friend = FirebaseDatabase.getInstance().getReference("friendReqGot");
                                    /*Map<String, String> mapStatus = new HashMap<>();
                                    mapStatus.put("reqStatus", "1");
                                    friend.child(UserDetails.username).setValue(mapStatus);*/
 
-                               DatabaseReference userData = FirebaseDatabase.getInstance().getReference("profile").child(UserDetails.username);
-                               userData.addValueEventListener(new ValueEventListener() {
-                                   @Override
-                                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                       String name = "", phone = "", image = "", id = "";
-                                       name = dataSnapshot.child("name").getValue
-                                               ().toString();
-                                       phone = dataSnapshot.child("phoneNumber").getValue().toString();
-                                       image = dataSnapshot.child("image").getValue().toString();
-                                       id = dataSnapshot.child("id").getValue().toString();
+                            DatabaseReference userData = FirebaseDatabase.getInstance().getReference("profile").child(UserDetails.username);
+                            userData.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String name = "", phone = "", image = "", id = "";
+                                    name = dataSnapshot.child("name").getValue
+                                            ().toString();
+                                    phone = dataSnapshot.child("phoneNumber").getValue().toString();
+                                    image = dataSnapshot.child("image").getValue().toString();
+                                    id = dataSnapshot.child("id").getValue().toString();
 
-                                       // phone= dataSnapshot.child("name").getValue().toString();
-                                      /* Toast.makeText(getActivity(), "Profile name: " + name + " waytwo ", Toast.LENGTH_LONG).show();*/
-                                       Map<String, String> map = new HashMap<>();
-                                       map.put("id", id);
-                                       map.put("image", image);
-                                       map.put("name", name);
-                                       map.put("phoneNumber", phone);
-                                       map.put("reqStatus", "1");
-                                       friend.child(UserDetails.friend).child(UserDetails.username).setValue(map);
+                                    // phone= dataSnapshot.child("name").getValue().toString();
+                                    /* Toast.makeText(getActivity(), "Profile name: " + name + " waytwo ", Toast.LENGTH_LONG).show();*/
+                                    Map<String, String> map = new HashMap<>();
+                                    map.put("id", id);
+                                    map.put("image", image);
+                                    map.put("name", name);
+                                    map.put("phoneNumber", phone);
+                                    map.put("reqStatus", "1");
+                                    friend.child(UserDetails.friend).child(UserDetails.username).setValue(map);
 
-                                   }
+                                }
 
-                                   @Override
-                                   public void onCancelled(@NonNull DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                   }
-                               });
-                           }
-                           }
-                       });
-                       holder.cancelBtn.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View v) {
-                               holder.requestBtn.setVisibility(View.VISIBLE);
-                               holder.cancelBtn.setVisibility(View.GONE);
-                               UserDetails.friend = model.getId();
-                               final DatabaseReference friend = FirebaseDatabase.getInstance().getReference("friendReqGot");
+                                }
+                            });
+                        }
+                    }
+                });
+                holder.cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holder.requestBtn.setVisibility(View.VISIBLE);
+                        holder.cancelBtn.setVisibility(View.GONE);
+                        UserDetails.friend = model.getId();
+                        final DatabaseReference friend = FirebaseDatabase.getInstance().getReference("friendReqGot");
                               /* Map<String, String> mapStatus = new HashMap<>();
                                mapStatus.put("reqStatus", "0");
                                friend.child(UserDetails.friend).child(UserDetails.username).setValue(mapStatus);*/
-                               friend.child(UserDetails.friend).child(UserDetails.username)
-                                       .removeValue();
+                        friend.child(UserDetails.friend).child(UserDetails.username)
+                                .removeValue();
 
 
-
-
-                           }
-                       });
+                    }
+                });
 
                       /* holder.view.setOnClickListener(new View.OnClickListener() {
                            @Override
@@ -220,58 +216,62 @@ public class FriendReqFragment extends Fragment {
 
                            }
                        });*/
-                }
+            }
 
-                @NonNull
-                @Override
-                public UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            @NonNull
+            @Override
+            public UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.invitationl_request, parent, false);
-                        return new UserHolder(view);
-                    };
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.invitationl_request, parent, false);
+                return new UserHolder(view);
+            }
 
-            };
+            ;
 
-            recyclerView.setAdapter(adapter);
-            adapter.startListening();
+        };
+
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
         progressDialog.dismiss();
-      //  recyclerView.setAdapter(adapter);
+        //  recyclerView.setAdapter(adapter);
     }
 
-public static class UserHolder extends RecyclerView.ViewHolder {
-    View view;
-    TextView userName, userPhoneNumber;
-    Button requestBtn, cancelBtn;
+    public static class UserHolder extends RecyclerView.ViewHolder {
+        View view;
+        TextView userName, userPhoneNumber;
+        Button requestBtn, cancelBtn;
 
 
-    public UserHolder(View itemView) {
-        super(itemView);
-        view = itemView;
-    }
+        public UserHolder(View itemView) {
+            super(itemView);
+            view = itemView;
+        }
 
-    public void setname(String name) {
-        userName = view.findViewById(R.id.name);
-        userName.setText(name);
-    }
+        public void setname(String name) {
+            userName = view.findViewById(R.id.name);
+            userName.setText(name);
+        }
 
-    public void setphoneNumber(String phoneNumber) {
-        userPhoneNumber = view.findViewById(R.id.phoneNumber);
-        userPhoneNumber.setText(phoneNumber);
-    }
+        public void setphoneNumber(String phoneNumber) {
+            userPhoneNumber = view.findViewById(R.id.phoneNumber);
+            userPhoneNumber.setText(phoneNumber);
+        }
 
-    public void setimage(String profileImage) {
-        CircleImageView userImage = view.findViewById(R.id.profileImage);
-        Picasso.get().load(profileImage).placeholder(R.drawable.profile_26).into(userImage);
+        public void setimage(String profileImage) {
+            CircleImageView userImage = view.findViewById(R.id.profileImage);
+            Picasso.get().load(profileImage).placeholder(R.drawable.profile_26).into(userImage);
+        }
+
+        public void setRequestButton(String btnRequest) {
+            requestBtn = view.findViewById(R.id.btn_sendReq);
+            requestBtn.setText(btnRequest);
+        }
+
+        public void setCancelButton(String btnCancel) {
+            cancelBtn = view.findViewById(R.id.btn_cancel);
+            cancelBtn.setText(btnCancel);
+        }
     }
-    public void setRequestButton(String btnRequest){
-        requestBtn=view.findViewById(R.id.btn_sendReq);
-        requestBtn.setText(btnRequest);
-    }
-    public void setCancelButton(String btnCancel){
-        cancelBtn=view.findViewById(R.id.btn_cancel);
-        cancelBtn.setText(btnCancel);
-    }
-}
 
 
    /* public void doOnSuccess(String str){

@@ -4,16 +4,16 @@ package in.rahul.chatappfirebase.model;
  * Created by Rahul on 13-08-2018.
  */
 
-public class FriendInvite {
+public class FriendInviteModel {
     private String Id;
     private String Image;
     private String Name;
     private String PhoneNumber;
 
-    public FriendInvite() {
+    public FriendInviteModel() {
     }
 
-    public FriendInvite(String id, String image, String name, String phoneNumber) {
+    public FriendInviteModel(String id, String image, String name, String phoneNumber) {
         Id = id;
         Image = image;
         Name = name;

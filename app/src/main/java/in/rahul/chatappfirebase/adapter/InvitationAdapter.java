@@ -1,4 +1,4 @@
-package in.rahul.chatappfirebase.viewHolder;
+package in.rahul.chatappfirebase.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

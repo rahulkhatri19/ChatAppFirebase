@@ -4,14 +4,14 @@ package in.rahul.chatappfirebase.model;
  * Created by Rahul on 09-08-2018.
  */
 
-public class User {
+public class UserModel {
     private String userName;
     private String password;
 
-    public User() {
+    public UserModel() {
     }
 
-    public User(String userName, String password) {
+    public UserModel(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }

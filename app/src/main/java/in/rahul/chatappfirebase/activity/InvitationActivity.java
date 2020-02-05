@@ -21,8 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import in.rahul.chatappfirebase.R;
-import in.rahul.chatappfirebase.model.FriendRequest;
-import in.rahul.chatappfirebase.viewHolder.InvitationAdapter;
+import in.rahul.chatappfirebase.model.FriendRequestModel;
+import in.rahul.chatappfirebase.adapter.InvitationAdapter;
 
 public class InvitationActivity extends AppCompatActivity {
     ListView usersList;
@@ -48,11 +48,11 @@ public class InvitationActivity extends AppCompatActivity {
         String dataUrl=  "https://chattapp-8f889.firebaseio.com/friendReqGot/"+UserDetails.username;
         Log.e("","Got: "+dataUrl);
         reference= FirebaseDatabase.getInstance().getReference(dataUrl);
-        FirebaseRecyclerOptions<FriendRequest> options= new FirebaseRecyclerOptions.Builder<FriendRequest>().setQuery(reference, FriendRequest.class).build();
+        FirebaseRecyclerOptions<FriendRequestModel> options= new FirebaseRecyclerOptions.Builder<FriendRequestModel>().setQuery(reference, FriendRequestModel.class).build();
 
-        FirebaseRecyclerAdapter<FriendRequest, InvitationAdapter> adapter= new FirebaseRecyclerAdapter<FriendRequest, InvitationAdapter>(options) {
+        FirebaseRecyclerAdapter<FriendRequestModel, InvitationAdapter> adapter= new FirebaseRecyclerAdapter<FriendRequestModel, InvitationAdapter>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull InvitationAdapter holder, int position, @NonNull FriendRequest model) {
+            protected void onBindViewHolder(@NonNull InvitationAdapter holder, int position, @NonNull FriendRequestModel model) {
 
             }
 
@@ -65,7 +65,7 @@ public class InvitationActivity extends AppCompatActivity {
             }
         };
 
-       /* StringRequest request = new StringRequest(FriendRequest.Method.GET, url, new Response.Listener<String>(){
+       /* StringRequest request = new StringRequest(FriendRequestModel.Method.GET, url, new Response.Listener<String>(){
             @Override
             public void onResponse(String string) {
                 doOnSuccess(string);
@@ -96,7 +96,7 @@ public class InvitationActivity extends AppCompatActivity {
                 map2.put("status", "1");
                 friendUser.child(UserDetails.username).setValue(map2);
 
-                startActivity(new Intent(InvitationActivity.this, Chat.class));
+                startActivity(new Intent(InvitationActivity.this, ChatActivity.class));
             }
         });*/
     }
@@ -136,7 +136,7 @@ public class InvitationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(InvitationActivity.this,Users.class));
+        startActivity(new Intent(InvitationActivity.this, UsersActivity.class));
     }
 
     @Override

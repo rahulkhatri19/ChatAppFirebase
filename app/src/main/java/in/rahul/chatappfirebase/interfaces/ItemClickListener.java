@@ -1,4 +1,4 @@
-package in.rahul.chatappfirebase.Interface;
+package in.rahul.chatappfirebase.interfaces;
 
 import android.view.View;
 

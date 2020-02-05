@@ -4,14 +4,14 @@ package in.rahul.chatappfirebase.model;
  * Created by Rahul on 09-08-2018.
  */
 
-public class Message {
+public class MessageModel {
     private String message;
     private String user;
 
-    public Message() {
+    public MessageModel() {
     }
 
-    public Message(String message, String user) {
+    public MessageModel(String message, String user) {
         this.message = message;
         this.user = user;
     }

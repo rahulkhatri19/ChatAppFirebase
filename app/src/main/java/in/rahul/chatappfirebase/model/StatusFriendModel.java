@@ -4,13 +4,13 @@ package in.rahul.chatappfirebase.model;
  * Created by Rahul on 10-08-2018.
  */
 
-public class StatusFriend {
+public class StatusFriendModel {
     private String status;
 
-    public StatusFriend() {
+    public StatusFriendModel() {
     }
 
-    public StatusFriend(String status) {
+    public StatusFriendModel(String status) {
         this.status = status;
     }
 

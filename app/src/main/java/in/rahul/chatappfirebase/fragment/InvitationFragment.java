@@ -28,17 +28,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import in.rahul.chatappfirebase.CircularImage.CircleImageView;
+import in.rahul.chatappfirebase.utility.CircleImageView;
 import in.rahul.chatappfirebase.R;
-import in.rahul.chatappfirebase.activity.Chat;
+import in.rahul.chatappfirebase.activity.ChatActivity;
 import in.rahul.chatappfirebase.activity.UserDetails;
-import in.rahul.chatappfirebase.model.FriendInvite;
+import in.rahul.chatappfirebase.model.FriendInviteModel;
 
 public class InvitationFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private DatabaseReference reference;
-    private FirebaseRecyclerAdapter<FriendInvite, UserInvitationHolder> adapter;
+    private FirebaseRecyclerAdapter<FriendInviteModel, UserInvitationHolder> adapter;
     ListView usersList;
     TextView noUsers;
     ArrayList<String> list = new ArrayList<>();
@@ -68,10 +68,10 @@ public class InvitationFragment extends Fragment {
         reference=FirebaseDatabase.getInstance().getReference("friendReqGot").child(UserDetails.username);
         reference.keepSynced(true);
 
-        FirebaseRecyclerOptions<FriendInvite> options= new FirebaseRecyclerOptions.Builder<FriendInvite>().setQuery(reference,FriendInvite.class).setLifecycleOwner(getActivity()).build();
-        adapter = new FirebaseRecyclerAdapter<FriendInvite, UserInvitationHolder>(options) {
+        FirebaseRecyclerOptions<FriendInviteModel> options= new FirebaseRecyclerOptions.Builder<FriendInviteModel>().setQuery(reference, FriendInviteModel.class).setLifecycleOwner(getActivity()).build();
+        adapter = new FirebaseRecyclerAdapter<FriendInviteModel, UserInvitationHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull final UserInvitationHolder holder, int position, @NonNull final FriendInvite model) {
+            protected void onBindViewHolder(@NonNull final UserInvitationHolder holder, int position, @NonNull final FriendInviteModel model) {
 
                 holder.setImage(model.getImage());
                 holder.setName(model.getName());
@@ -122,7 +122,7 @@ public class InvitationFragment extends Fragment {
 
                     //    Toast.makeText(getActivity(), "Yes it works", Toast.LENGTH_SHORT).show();
                         UserDetails.friend = model.getId();
-                        startActivity(new Intent(getActivity(), Chat.class));
+                        startActivity(new Intent(getActivity(), ChatActivity.class));
                         reference.child(UserDetails.friend).removeValue();
 
                     }

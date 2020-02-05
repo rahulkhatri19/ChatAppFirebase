@@ -1,12 +1,16 @@
-package in.rahul.chatappfirebase.activity;
+package in.rahul.chatappfirebase.fragment;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,25 +29,29 @@ import org.json.JSONObject;
 
 import in.rahul.chatappfirebase.MainActivity;
 import in.rahul.chatappfirebase.R;
+import in.rahul.chatappfirebase.activity.RegisterActivity;
+import in.rahul.chatappfirebase.activity.UserDetails;
 
-public class Login extends AppCompatActivity {
-    TextView registerUser;
+public class LoginFragment extends Fragment {
+
+//    TextView registerUser;
     EditText username, password;
     Button loginButton;
     String user, pass;
     ImageView showPassword, hidePassword;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.activity_login, container, false);
 
-        registerUser = findViewById(R.id.register);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        loginButton = findViewById(R.id.loginButton);
-        showPassword = findViewById(R.id.showPassword);
-        hidePassword = findViewById(R.id.hidePassword);
+//        registerUser = view.findViewById(R.id.register);
+        username = view.findViewById(R.id.username);
+        password = view.findViewById(R.id.password);
+        loginButton = view.findViewById(R.id.loginButton);
+        showPassword = view.findViewById(R.id.showPassword);
+        hidePassword = view.findViewById(R.id.hidePassword);
         hidePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,16 +76,18 @@ public class Login extends AppCompatActivity {
         });
 
 
-        /*if (new SharedPreferencesUtils(Login.this).getLoginFlag()){
-            startActivity(new Intent(Login.this,MainActivity.class));
-           // new SharedPreferencesUtils(Login.this).setLoginFlag(false);
+        /*if (new SharedPreferencesUtils(LoginActivity.this).getLoginFlag()){
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+           // new SharedPreferencesUtils(LoginActivity.this).setLoginFlag(false);
         }*/
-        registerUser.setOnClickListener(new View.OnClickListener() {
+        /*registerUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Login.this, Register.class));
+                Intent p =  new Intent(getActivity(), RegisterActivity.class);
+                p.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(p);
             }
-        });
+        });*/
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,12 +105,13 @@ public class Login extends AppCompatActivity {
 
             }
         });
-    }
 
+        return view;
+    }
     protected void login() {
         // String url = "https://fir-chat-4efae.firebaseio.com/users.json";
         String url = "https://chattapp-8f889.firebaseio.com/users.json";
-        final ProgressDialog progressDialog = new ProgressDialog(Login.this);
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading");
         progressDialog.show();
 
@@ -108,23 +119,23 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(String s) {
                 if (s.equals("null")) {
-                    Toast.makeText(Login.this, "User not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "UserModel not found", Toast.LENGTH_LONG).show();
                 } else {
                     try {
                         JSONObject obj = new JSONObject(s);
 
                         if (!obj.has(user)) {
-                            Toast.makeText(Login.this, "User not found", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "UserModel not found", Toast.LENGTH_LONG).show();
                         } else if (obj.getJSONObject(user).getString("password").equals(pass)) {
                             UserDetails.username = user;
                             UserDetails.password = pass;
-                            // startActivity(new Intent(Login.this, Users.class));
+                            // startActivity(new Intent(LoginActivity.this, UsersActivity.class));
 
-                            Intent p = new Intent(Login.this, MainActivity.class);
+                            Intent p = new Intent(getActivity(), MainActivity.class);
                             p.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(p);
                         } else {
-                            Toast.makeText(Login.this, "incorrect password", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "incorrect password", Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -141,7 +152,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        RequestQueue rQueue = Volley.newRequestQueue(Login.this);
+        RequestQueue rQueue = Volley.newRequestQueue(getActivity());
         rQueue.add(request);
     }
 }

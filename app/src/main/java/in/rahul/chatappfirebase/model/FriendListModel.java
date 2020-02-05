@@ -4,16 +4,16 @@ package in.rahul.chatappfirebase.model;
  * Created by Rahul on 13-08-2018.
  */
 
-public class FriendList {
+public class FriendListModel {
     private String image;
     private String name;
     private String phoneNumber;
     private String status;
 
-    public FriendList() {
+    public FriendListModel() {
     }
 
-    public FriendList(String image, String name, String phoneNumber, String status) {
+    public FriendListModel(String image, String name, String phoneNumber, String status) {
         this.image = image;
         this.name = name;
         this.phoneNumber = phoneNumber;

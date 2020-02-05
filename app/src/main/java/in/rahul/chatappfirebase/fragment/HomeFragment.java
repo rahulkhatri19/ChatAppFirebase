@@ -27,17 +27,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import in.rahul.chatappfirebase.CircularImage.CircleImageView;
+import in.rahul.chatappfirebase.activity.ChatActivity;
+import in.rahul.chatappfirebase.utility.CircleImageView;
 import in.rahul.chatappfirebase.R;
-import in.rahul.chatappfirebase.activity.Chat;
 import in.rahul.chatappfirebase.activity.UserDetails;
-import in.rahul.chatappfirebase.model.FriendInvite;
+import in.rahul.chatappfirebase.model.FriendInviteModel;
 
 public class HomeFragment extends Fragment {
 
     // ListView usersList;
     private RecyclerView recyclerView;
-    private FirebaseRecyclerAdapter<FriendInvite, HomeHolder> adapter;
+    private FirebaseRecyclerAdapter<FriendInviteModel, HomeHolder> adapter;
     TextView noUsers;
     String friendStatus="";
     ArrayList<String> list = new ArrayList<>();
@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserDetails.friend = list.get(position);
-                startActivity(new Intent(getActivity(), Chat.class));
+                startActivity(new Intent(getActivity(), ChatActivity.class));
 
             }
         });*/
@@ -115,11 +115,11 @@ public class HomeFragment extends Fragment {
     private void loadData() {
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("friend").child
                 (UserDetails.username);
-        FirebaseRecyclerOptions<FriendInvite> options= new FirebaseRecyclerOptions.Builder<FriendInvite>().setQuery(reference, FriendInvite.class).setLifecycleOwner(getActivity()).build();
+        FirebaseRecyclerOptions<FriendInviteModel> options= new FirebaseRecyclerOptions.Builder<FriendInviteModel>().setQuery(reference, FriendInviteModel.class).setLifecycleOwner(getActivity()).build();
 
-    adapter= new FirebaseRecyclerAdapter<FriendInvite, HomeHolder>(options) {
+    adapter= new FirebaseRecyclerAdapter<FriendInviteModel, HomeHolder>(options) {
         @Override
-        protected void onBindViewHolder(@NonNull final HomeHolder holder, int position, @NonNull final FriendInvite model) {
+        protected void onBindViewHolder(@NonNull final HomeHolder holder, int position, @NonNull final FriendInviteModel model) {
             holder.setImage(model.getImage());
             holder.setName(model.getName());
             holder.setPhoneNumber(model.getPhoneNumber());
@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     UserDetails.friend = model.getId();
-                    startActivity(new Intent(getActivity(), Chat.class));
+                    startActivity(new Intent(getActivity(), ChatActivity.class));
                     /*DatabaseReference status = FirebaseDatabase.getInstance().getReference("status").child(UserDetails.friend);
                     status.addValueEventListener(new ValueEventListener() {
                         @Override

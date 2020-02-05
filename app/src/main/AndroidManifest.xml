@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="in.rahul.chatappfirebase.MainActivity"
+            android:name=".activity.LoginRegActivity"
             android:theme="@style/Theme.Design.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,21 +22,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="in.rahul.chatappfirebase.activity.Login"
+            android:name=".MainActivity"
             android:theme="@style/Theme.Design.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name="in.rahul.chatappfirebase.activity.Chat" />
-        <activity android:name="in.rahul.chatappfirebase.activity.Users" />
         <activity
-            android:name="in.rahul.chatappfirebase.activity.Register"
+            android:name=".activity.LoginActivity"
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.UsersActivity" />
+        <activity
+            android:name=".activity.RegisterActivity"
             android:theme="@style/Theme.Design.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name="in.rahul.chatappfirebase.activity.FriendRequestActivity" />
-        <activity android:name="in.rahul.chatappfirebase.activity.InvitationActivity" />
+        <activity android:name=".activity.FriendRequestActivity" />
+        <activity android:name=".activity.InvitationActivity" />
     </application>
 
 </manifest>

@@ -25,7 +25,7 @@ import java.util.Iterator;
 
 import in.rahul.chatappfirebase.R;
 
-public class Users extends AppCompatActivity {
+public class UsersActivity extends AppCompatActivity {
     ListView usersList;
     TextView noUsers;
     ArrayList<String> list = new ArrayList<>();
@@ -41,7 +41,7 @@ public class Users extends AppCompatActivity {
         usersList = findViewById(R.id.usersList);
         noUsers = findViewById(R.id.noUsersText);
 
-        progressDialog = new ProgressDialog(Users.this);
+        progressDialog = new ProgressDialog(UsersActivity.this);
         progressDialog.setMessage("Loading");
         progressDialog.show();
 
@@ -61,22 +61,22 @@ public class Users extends AppCompatActivity {
             }
         });
 
-        RequestQueue rQueue = Volley.newRequestQueue(Users.this);
+        RequestQueue rQueue = Volley.newRequestQueue(UsersActivity.this);
         rQueue.add(request);
 
         usersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserDetails.friend = list.get(position);
-                startActivity(new Intent(Users.this, Chat.class));
+                startActivity(new Intent(UsersActivity.this, ChatActivity.class));
             }
         });
     }
     public void sendRequest(View view){
-        startActivity(new Intent( Users.this, FriendRequestActivity.class));
+        startActivity(new Intent( UsersActivity.this, FriendRequestActivity.class));
     }
     public void sendInvitation(View view){
-        startActivity(new Intent( Users.this, InvitationActivity.class));
+        startActivity(new Intent( UsersActivity.this, InvitationActivity.class));
     }
 
     public void doOnSuccess(String str){

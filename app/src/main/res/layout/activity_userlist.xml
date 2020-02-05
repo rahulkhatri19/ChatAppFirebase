@@ -5,28 +5,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".activity.Users">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:orientation="horizontal">
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Send Friend Request"
-        android:onClick="sendRequest"
-        android:id="@+id/btn_friendRequest"/>
+    tools:context=".activity.UsersActivity">
 
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="Invitaion List"
-        android:onClick="sendInvitation"
-        android:id="@+id/btn_Invitation"/>
-</LinearLayout>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_friendRequest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="sendRequest"
+            android:text="Send Friend Request" />
+
+        <Button
+            android:id="@+id/btn_Invitation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="sendInvitation"
+            android:text="Invitaion List" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/noUsersText"

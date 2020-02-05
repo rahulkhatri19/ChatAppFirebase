@@ -28,7 +28,7 @@ import java.util.Map;
 
 import in.rahul.chatappfirebase.R;
 
-public class Chat extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     LinearLayout layout;
     ImageView sendButton;
@@ -88,14 +88,14 @@ public class Chat extends AppCompatActivity {
 
                 if(!messageText.equals("")){
                     Map<String, String> map = new HashMap<>();
-                    map.put("Message", messageText);
-                    map.put("User", UserDetails.username);
+                    map.put("MessageModel", messageText);
+                    map.put("UserModel", UserDetails.username);
                     map.put("time", String.valueOf(newDate));
                     userToFriend.push().setValue(map);
                     friendToUser.push().setValue(map);
                     messageArea.setText("");
                 }else {
-                    Toast.makeText(Chat.this, "Please Enter Message\nCan't leave blank", Toast
+                    Toast.makeText(ChatActivity.this, "Please Enter MessageModel\nCan't leave blank", Toast
                             .LENGTH_SHORT)
                             .show();
                 }
@@ -111,14 +111,14 @@ public class Chat extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
                 String statusUser = map.get("status").toString();
-                StatusFriend(statusUser,3);
+                StatusFriendModel(statusUser,3);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                *//* Map map = dataSnapshot.getValue(Map.class);
                 String statusUser = map.get("status").toString();
-                StatusFriend(statusUser,3);*//*
+                StatusFriendModel(statusUser,3);*//*
             }
 
             @Override
@@ -142,8 +142,8 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
-                String  message = map.get("Message").toString();
-                String  user = map.get("User").toString();
+                String  message = map.get("MessageModel").toString();
+                String  user = map.get("UserModel").toString();
                 String  newDate = map.get("time").toString();
                 String time="";
 
@@ -167,7 +167,7 @@ public class Chat extends AppCompatActivity {
                     Log.e("","timeBelow "+time);
                 }
                /* String statusUser = map.get("status").toString();
-                StatusFriend(statusUser,3);*/
+                StatusFriendModel(statusUser,3);*/
 
 
                 if(user.equals(UserDetails.username)){
@@ -213,7 +213,7 @@ public class Chat extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
-                StatusFriend statusFriend= dataSnapshot.getValue(StatusFriend.class);
+                StatusFriendModel statusFriend= dataSnapshot.getValue(StatusFriendModel.class);
                String status=statusFriend.getStatus();
                 Status(status,3);
             }
@@ -226,7 +226,7 @@ public class Chat extends AppCompatActivity {
     }
     public void addMessageBox(String message, int type){
 
-        TextView textView = new TextView(Chat.this);
+        TextView textView = new TextView(ChatActivity.this);
         textView.setText(message);
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup
@@ -254,9 +254,9 @@ public class Chat extends AppCompatActivity {
     }
 
 
-    // who send Message
+    // who send MessageModel
     public void addNameBox(String message, int type){
-        TextView textView = new TextView(Chat.this);
+        TextView textView = new TextView(ChatActivity.this);
         textView.setTextSize(12);
         textView.setText(message);
 
@@ -281,7 +281,7 @@ public class Chat extends AppCompatActivity {
     }
 
     public void Status(String message, int type){
-        TextView textView = new TextView(Chat.this);
+        TextView textView = new TextView(ChatActivity.this);
         textView.setTextSize(15);
         textView.setText(message);
 

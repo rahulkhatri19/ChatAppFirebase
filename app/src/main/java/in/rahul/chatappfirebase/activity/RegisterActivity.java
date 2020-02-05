@@ -21,14 +21,15 @@ import com.firebase.client.Firebase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import in.rahul.chatappfirebase.MainActivity;
 import in.rahul.chatappfirebase.R;
 
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     EditText username, password;
     Button registerButton;
     String user, pass;
-    TextView login;
+//    TextView login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +39,16 @@ public class Register extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         registerButton = findViewById(R.id.registerButton);
-        login = findViewById(R.id.login);
+//        login = findViewById(R.id.login);
 
         Firebase.setAndroidContext(this);
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Register.this, Login.class));
-            }
-        });
+//
+//        login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+//            }
+//        });
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +79,7 @@ public class Register extends AppCompatActivity {
     }
 
     protected void registration(){
-        final ProgressDialog progressDialog = new ProgressDialog(Register.this);
+        final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
         progressDialog.setMessage("Loading");
         progressDialog.show();
 
@@ -92,7 +93,7 @@ public class Register extends AppCompatActivity {
 
                 if(str.equals("null")) {
                     reference.child(user).child("password").setValue(pass);
-                    Toast.makeText(Register.this, "Registration successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_LONG).show();
                     Firebase status = new Firebase("https://chattapp-8f889.firebaseio.com/status");
                     status.child(user).child("status").setValue("offline");
                 }
@@ -102,11 +103,11 @@ public class Register extends AppCompatActivity {
 
                         if (!object.has(user)) {
                             reference.child(user).child("password").setValue(pass);
-                            Toast.makeText(Register.this, "Registration successful!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this, "Registration successful!", Toast.LENGTH_LONG).show();
                             Firebase status = new Firebase("https://chattapp-8f889.firebaseio.com/status");
                             status.child(user).child("status").setValue("offline");
                         } else {
-                            Toast.makeText(Register.this, "Username already exists", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this, "Username already exists", Toast.LENGTH_LONG).show();
                         }
 
                     } catch (JSONException e) {
@@ -125,10 +126,17 @@ public class Register extends AppCompatActivity {
             }
         });
 
-        RequestQueue rQueue = Volley.newRequestQueue(Register.this);
+        RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
         rQueue.add(request);
 
-        startActivity(new Intent(Register.this, Login.class));
+        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
     }
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        Intent p = new Intent(this, LoginActivity.class);
+        p.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(p);
+    }
 }

@@ -85,7 +85,7 @@ public class FriendRequestActivity extends AppCompatActivity {
 
 
                /* if(status == 1){
-                    startActivity(new Intent(FriendRequestActivity.this, Chat.class));
+                    startActivity(new Intent(FriendRequestActivity.this, ChatActivity.class));
                 } else {
                     Toast.makeText(FriendRequestActivity.this, "Wait For Friend request To be Accepted", Toast.LENGTH_SHORT).show();
                 }*/
@@ -130,6 +130,6 @@ public class FriendRequestActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(FriendRequestActivity.this,Users.class));
+        startActivity(new Intent(FriendRequestActivity.this, UsersActivity.class));
     }
 }
