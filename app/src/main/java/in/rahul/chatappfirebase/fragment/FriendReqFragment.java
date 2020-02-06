@@ -167,8 +167,7 @@ public class FriendReqFragment extends Fragment {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     String name = "", phone = "", image = "", id = "";
-                                    name = dataSnapshot.child("name").getValue
-                                            ().toString();
+                                    name = dataSnapshot.child("name").getValue().toString();
                                     phone = dataSnapshot.child("phoneNumber").getValue().toString();
                                     image = dataSnapshot.child("image").getValue().toString();
                                     id = dataSnapshot.child("id").getValue().toString();

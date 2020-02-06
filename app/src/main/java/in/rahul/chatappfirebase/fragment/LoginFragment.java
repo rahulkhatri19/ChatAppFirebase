@@ -95,8 +95,10 @@ public class LoginFragment extends Fragment {
 
                 if (user.equals("")) {
                     username.setError("Thies field is required");
+                    username.requestFocus();
                 } else if (pass.equals("")) {
                     password.setError("This field is required");
+                    password.requestFocus();
                 } else {
                     login();
                 }
@@ -133,7 +135,7 @@ public class LoginFragment extends Fragment {
                             p.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(p);
                         } else {
-                            Toast.makeText(getActivity(), "incorrect password", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Invalid User or password", Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

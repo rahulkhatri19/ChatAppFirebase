@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import in.rahul.chatappfirebase.R;
 import in.rahul.chatappfirebase.activity.LoginActivity;
+import in.rahul.chatappfirebase.activity.LoginRegActivity;
 
 public class RegisterFragment extends Fragment {
 
@@ -133,6 +134,6 @@ public class RegisterFragment extends Fragment {
         RequestQueue rQueue = Volley.newRequestQueue(getActivity());
         rQueue.add(request);
 
-        startActivity(new Intent(getActivity(), LoginActivity.class));
+        startActivity(new Intent(getActivity(), LoginRegActivity.class));
     }
 }
