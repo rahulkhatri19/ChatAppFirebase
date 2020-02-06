@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -21,7 +20,6 @@ import com.firebase.client.Firebase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import in.rahul.chatappfirebase.MainActivity;
 import in.rahul.chatappfirebase.R;
 
 
@@ -34,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.fragment_register);
 
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);

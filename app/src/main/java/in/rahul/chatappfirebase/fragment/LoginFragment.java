@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,7 +28,6 @@ import org.json.JSONObject;
 
 import in.rahul.chatappfirebase.MainActivity;
 import in.rahul.chatappfirebase.R;
-import in.rahul.chatappfirebase.activity.RegisterActivity;
 import in.rahul.chatappfirebase.activity.UserDetails;
 
 public class LoginFragment extends Fragment {
@@ -44,7 +42,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.activity_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
 
 //        registerUser = view.findViewById(R.id.register);
         username = view.findViewById(R.id.username);

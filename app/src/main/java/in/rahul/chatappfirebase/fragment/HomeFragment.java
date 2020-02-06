@@ -1,7 +1,6 @@
 package in.rahul.chatappfirebase.fragment;
 
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,7 +38,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirebaseRecyclerAdapter<FriendInviteModel, HomeHolder> adapter;
     TextView noUsers;
-    String friendStatus="";
+    String friendStatus = "";
     ArrayList<String> list = new ArrayList<>();
     int totalUsers = 0;
     ProgressDialog progressDialog;
@@ -48,11 +47,11 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-      //  usersList = view.findViewById(R.id.usersList);
+        //  usersList = view.findViewById(R.id.usersList);
         noUsers = view.findViewById(R.id.noUsersText);
-        recyclerView=view.findViewById(R.id.recycleView);
+        recyclerView = view.findViewById(R.id.recycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         progressDialog = new ProgressDialog(getActivity());
@@ -61,7 +60,7 @@ public class HomeFragment extends Fragment {
 
         loadData();
 
-        DatabaseReference checkOnline= FirebaseDatabase.getInstance().getReference("status");
+        DatabaseReference checkOnline = FirebaseDatabase.getInstance().getReference("status");
 
         Map<String, String> map = new HashMap<>();
         map.put("status", "online");
@@ -113,27 +112,27 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadData() {
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("friend").child
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("friend").child
                 (UserDetails.username);
-        FirebaseRecyclerOptions<FriendInviteModel> options= new FirebaseRecyclerOptions.Builder<FriendInviteModel>().setQuery(reference, FriendInviteModel.class).setLifecycleOwner(getActivity()).build();
+        FirebaseRecyclerOptions<FriendInviteModel> options = new FirebaseRecyclerOptions.Builder<FriendInviteModel>().setQuery(reference, FriendInviteModel.class).setLifecycleOwner(getActivity()).build();
 
-    adapter= new FirebaseRecyclerAdapter<FriendInviteModel, HomeHolder>(options) {
-        @Override
-        protected void onBindViewHolder(@NonNull final HomeHolder holder, int position, @NonNull final FriendInviteModel model) {
-            holder.setImage(model.getImage());
-            holder.setName(model.getName());
-            holder.setPhoneNumber(model.getPhoneNumber());
+        adapter = new FirebaseRecyclerAdapter<FriendInviteModel, HomeHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull final HomeHolder holder, int position, @NonNull final FriendInviteModel model) {
+                holder.setImage(model.getImage());
+                holder.setName(model.getName());
+                holder.setPhoneNumber(model.getPhoneNumber());
 
-            UserDetails.friend = model.getId();
-            if (FirebaseDatabase.getInstance().getReference("status").child(UserDetails.friend) != null){
+                UserDetails.friend = model.getId();
+//            if (FirebaseDatabase.getInstance().getReference("status").child(UserDetails.friend) != null){
                 DatabaseReference status = FirebaseDatabase.getInstance().getReference("status").child(UserDetails.friend);
 
                 status.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.child("status").getValue() != null){
-                            friendStatus= dataSnapshot.child("status").getValue().toString();
+                        if (dataSnapshot.child("status").getValue() != null) {
+                            friendStatus = dataSnapshot.child("status").getValue().toString();
                         }
 
 
@@ -152,14 +151,13 @@ public class HomeFragment extends Fragment {
 
                     }
                 });
-            }
 
 
-            holder.view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    UserDetails.friend = model.getId();
-                    startActivity(new Intent(getActivity(), ChatActivity.class));
+                holder.view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UserDetails.friend = model.getId();
+                        startActivity(new Intent(getActivity(), ChatActivity.class));
                     /*DatabaseReference status = FirebaseDatabase.getInstance().getReference("status").child(UserDetails.friend);
                     status.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -183,49 +181,52 @@ public class HomeFragment extends Fragment {
                         }
                     });
 */
-                }
-            });
-        }
+                    }
+                });
+            }
 
-        @NonNull
-        @Override
-        public HomeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.friendlayout, parent, false);
+            @NonNull
+            @Override
+            public HomeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friendlayout, parent, false);
 
-            return new HomeHolder(view);
-        }
-    };
-    recyclerView.setAdapter(adapter);
-    adapter.startListening();
-    progressDialog.dismiss();
+                return new HomeHolder(view);
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+        progressDialog.dismiss();
     }
 
-    public static class HomeHolder extends RecyclerView.ViewHolder{
+    public static class HomeHolder extends RecyclerView.ViewHolder {
         View view;
 
-        public HomeHolder(View itemView){
+        public HomeHolder(View itemView) {
             super(itemView);
-            view= itemView;
+            view = itemView;
         }
-        public void setName(String name){
-            TextView userName= view.findViewById(R.id.name);
+
+        public void setName(String name) {
+            TextView userName = view.findViewById(R.id.name);
             userName.setText(name);
         }
-        public void setPhoneNumber(String phoneNumber){
-            TextView userPhoneNumber= view.findViewById(R.id.phoneNumber);
+
+        public void setPhoneNumber(String phoneNumber) {
+            TextView userPhoneNumber = view.findViewById(R.id.phoneNumber);
             userPhoneNumber.setText(phoneNumber);
         }
-        public void setImage(String profileImage){
-            CircleImageView userImage= view.findViewById(R.id.profileImage);
+
+        public void setImage(String profileImage) {
+            CircleImageView userImage = view.findViewById(R.id.profileImage);
             Picasso.get().load(profileImage).placeholder(R.drawable.profile_26).into(userImage);
         }
-        public void setStatus(String status){
-            TextView userStatus= view.findViewById(R.id.status);
-           // userStatus.setBackground(R.drawable.red_oval);
-            if (status.equals("online")){
+
+        public void setStatus(String status) {
+            TextView userStatus = view.findViewById(R.id.status);
+            // userStatus.setBackground(R.drawable.red_oval);
+            if (status.equals("online")) {
                 userStatus.setBackgroundResource(R.drawable.green_oval);
-            }
-            else {
+            } else {
                 userStatus.setBackgroundResource(R.drawable.red_oval);
             }
         }

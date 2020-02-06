@@ -1,9 +1,13 @@
 package in.rahul.chatappfirebase.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -26,6 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import in.rahul.chatappfirebase.MainActivity;
 import in.rahul.chatappfirebase.R;
 
 public class ChatActivity extends AppCompatActivity {
@@ -34,11 +39,9 @@ public class ChatActivity extends AppCompatActivity {
     ImageView sendButton;
     EditText messageArea;
     NestedScrollView scrollView;
-   //String message=" ", user=" ", time=" ", status="offline";
+    //String message=" ", user=" ", time=" ", status="offline";
 
     Firebase userToFriend, friendToUser, statusRecord, statusFetchRecord;
-
-
 
 
     @Override
@@ -50,12 +53,25 @@ public class ChatActivity extends AppCompatActivity {
         sendButton = findViewById(R.id.sendButton);
         messageArea = findViewById(R.id.messageArea);
         scrollView = findViewById(R.id.scrollView);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Messages");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //  finish ();
+
+                Intent p = new Intent(ChatActivity.this, MainActivity.class);
+                p.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(p);
+            }
+        });
 
         // firebase references
         Firebase.setAndroidContext(this);
 
         userToFriend = new Firebase("https://chattapp-8f889.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.friend);
-        String friendUrl= "https://chattapp-8f889.firebaseio.com/messages/"+ UserDetails.friend + "_" + UserDetails.username;
+        String friendUrl = "https://chattapp-8f889.firebaseio.com/messages/" + UserDetails.friend + "_" + UserDetails.username;
         friendToUser = new Firebase(friendUrl);
 
      /*  statusFetchRecord= new Firebase("https://chattapp-8f889.firebaseio.com/messages/"+ UserDetails.username + "_" + UserDetails.friend).child(UserDetails.friend);
@@ -71,22 +87,22 @@ public class ChatActivity extends AppCompatActivity {
         map3.put("status","offline");
         statusRecord.child(UserDetails.username).onDisconnect().setValue(map3);*/
 
-      // String refranceUrl="messages/"+UserDetails.username+"_"+UserDetails.friend;
+        // String refranceUrl="messages/"+UserDetails.username+"_"+UserDetails.friend;
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String messageText = messageArea.getText().toString();
-              //  messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getMessageTime()));
+                //  messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getMessageTime()));
                 //String timeStamp= String.valueOf(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", System.currentTimeMillis());
 
-               // Right Code
-                 Date currentTime = Calendar.getInstance().getTime();
-                DateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
-                String newDate= dateFormat.format(currentTime);
+                // Right Code
+                Date currentTime = Calendar.getInstance().getTime();
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String newDate = dateFormat.format(currentTime);
 
-                if(!messageText.equals("")){
+                if (!messageText.equals("")) {
                     Map<String, String> map = new HashMap<>();
                     map.put("MessageModel", messageText);
                     map.put("UserModel", UserDetails.username);
@@ -94,14 +110,13 @@ public class ChatActivity extends AppCompatActivity {
                     userToFriend.push().setValue(map);
                     friendToUser.push().setValue(map);
                     messageArea.setText("");
-                }else {
+                } else {
                     Toast.makeText(ChatActivity.this, "Please Enter MessageModel\nCan't leave blank", Toast
                             .LENGTH_SHORT)
                             .show();
                 }
             }
         });
-
 
 
         // event listener
@@ -142,47 +157,46 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
-                String  message = map.get("MessageModel").toString();
-                String  user = map.get("UserModel").toString();
-                String  newDate = map.get("time").toString();
-                String time="";
+
+                String newDate = map.get("time").toString();
+                String time = "";
 
                 Date currentTime = Calendar.getInstance().getTime();
-                DateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
-               // DateFormat dateFormat2= new SimpleDateFormat("dd/MM/yyyy");
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                // DateFormat dateFormat2= new SimpleDateFormat("dd/MM/yyyy");
 
-                String newDateFormat= dateFormat.format(currentTime);
-               // String newDateFormat2= dateFormat2.format(map.get("time"));
-                Log.e("","newDateFormat "+newDateFormat);
-               // Log.e("","newDateFormat2 "+newDateFormat2);
-                System.out.println("newDateFormat "+newDateFormat);
-              //  System.out.println("newDateFormat2 "+newDateFormat2);
-                if (map.get("time").equals(newDateFormat)){
-                     time = "Today";
-                    Log.e("","timeif "+time);
+                String newDateFormat = dateFormat.format(currentTime);
+                // String newDateFormat2= dateFormat2.format(map.get("time"));
+                Log.e("", "newDateFormat " + newDateFormat);
+                // Log.e("","newDateFormat2 "+newDateFormat2);
+                System.out.println("newDateFormat " + newDateFormat);
+                //  System.out.println("newDateFormat2 "+newDateFormat2);
+                if (map.get("time").equals(newDateFormat)) {
+                    time = "Today";
+                    Log.e("", "timeif " + time);
                 } else {
-                  //  DateFormat dateFormat3= new SimpleDateFormat("dd/MM/yyyy");
-                   // time= map.get("time").toString();
-                    time= map.get("time").toString();
-                    Log.e("","timeBelow "+time);
+                    //  DateFormat dateFormat3= new SimpleDateFormat("dd/MM/yyyy");
+                    // time= map.get("time").toString();
+                    time = map.get("time").toString();
+                    Log.e("", "timeBelow " + time);
                 }
                /* String statusUser = map.get("status").toString();
                 StatusFriendModel(statusUser,3);*/
 
+                if (map.get("MessageModel") != null && map.get("UserModel") != null) {
+                    String message = map.get("MessageModel").toString();
+                    String user = map.get("UserModel").toString();
 
-                if(user.equals(UserDetails.username)){
-                  //  addNameBox(UserDetails.username, 1);
-                    addNameBox(time, 1);
-                    addMessageBox(message, 1);
+                    if (user.equals(UserDetails.username)) {
+                        //  addNameBox(UserDetails.username, 1);
+                        addNameBox(time, 1);
+                        addMessageBox(message, 1);
+                    } else {
+                        addNameBox(time, 2);
+                        // addNameBox(UserDetails.friend, 2);
+                        addMessageBox(message, 2);
 
-
-
-                }
-                else{
-                    addNameBox(time, 2);
-                   // addNameBox(UserDetails.friend, 2);
-                    addMessageBox( message, 2);
-
+                    }
                 }
 
             }
@@ -224,7 +238,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });*/
     }
-    public void addMessageBox(String message, int type){
+
+    public void addMessageBox(String message, int type) {
 
         TextView textView = new TextView(ChatActivity.this);
         textView.setText(message);
@@ -234,18 +249,17 @@ public class ChatActivity extends AppCompatActivity {
         layoutParams.weight = 1.0f;
 
 
-        if(type == 1) {
+        if (type == 1) {
 
             layoutParams.gravity = Gravity.START;
             textView.setBackgroundResource(R.drawable.bubble_out);
             textView.setTextColor(getResources().getColor(R.color.chatBlack));
-            textView.setPadding(20,20,20,20);
-        }
-        else{
+            textView.setPadding(20, 20, 20, 20);
+        } else {
             layoutParams.gravity = Gravity.END;
             textView.setBackgroundResource(R.drawable.bubble_in);
             textView.setTextColor(getResources().getColor(R.color.chatBlack));
-            textView.setPadding(20,20,20,20);
+            textView.setPadding(20, 20, 20, 20);
         }
         textView.setLayoutParams(layoutParams);
         layout.addView(textView);
@@ -255,7 +269,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
     // who send MessageModel
-    public void addNameBox(String message, int type){
+    public void addNameBox(String message, int type) {
         TextView textView = new TextView(ChatActivity.this);
         textView.setTextSize(12);
         textView.setText(message);
@@ -264,14 +278,13 @@ public class ChatActivity extends AppCompatActivity {
                 .LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.weight = 1.0f;
 
-        if(type == 1) {
+        if (type == 1) {
             layoutParams.gravity = Gravity.START;
-            textView.setPadding(20,20,20,20);
+            textView.setPadding(20, 20, 20, 20);
             textView.setTextColor(getResources().getColor(R.color.chatWhite));
-        }
-        else{
+        } else {
             layoutParams.gravity = Gravity.END;
-            textView.setPadding(20,20,20,20);
+            textView.setPadding(20, 20, 20, 20);
             textView.setTextColor(getResources().getColor(R.color.chatWhite));
         }
         textView.setLayoutParams(layoutParams);
@@ -280,7 +293,7 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    public void Status(String message, int type){
+    public void Status(String message, int type) {
         TextView textView = new TextView(ChatActivity.this);
         textView.setTextSize(15);
         textView.setText(message);
@@ -289,13 +302,13 @@ public class ChatActivity extends AppCompatActivity {
                 .LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.weight = 1.0f;
 
-        if (type == 3){
-            layoutParams.gravity = Gravity.CENTER|Gravity.TOP;
-            textView.setPadding(20,20,20,20);
-            if (message.equals("offline")){
+        if (type == 3) {
+            layoutParams.gravity = Gravity.CENTER | Gravity.TOP;
+            textView.setPadding(20, 20, 20, 20);
+            if (message.equals("offline")) {
                 textView.setTextColor(Color.RED);
 
-            }  else if (message.equals("online")){
+            } else if (message.equals("online")) {
                 textView.setTextColor(Color.GREEN);
             } else {
                 textView.setTextColor(getResources().getColor(R.color.chatWhite));
@@ -318,4 +331,18 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActionBar ab = getSupportActionBar();
+        if (ab != null){
+            ab.setTitle("Messages");
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public void setSupportActionBar(@Nullable Toolbar toolbar) {
+        super.setSupportActionBar(toolbar);
+    }
 }

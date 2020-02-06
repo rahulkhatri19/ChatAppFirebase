@@ -33,13 +33,14 @@
             android:name=".activity.LoginActivity"
             android:theme="@style/Theme.Design.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
-           <!-- <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!-- <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>-->
         </activity>
-        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.ChatActivity"
+            android:theme="@style/Theme.Design.NoActionBar"/>
         <activity android:name=".activity.UsersActivity" />
         <activity
             android:name=".activity.RegisterActivity"

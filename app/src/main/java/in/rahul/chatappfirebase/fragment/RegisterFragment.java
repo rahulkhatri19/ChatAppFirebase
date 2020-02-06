@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,7 +25,6 @@ import org.json.JSONObject;
 
 import in.rahul.chatappfirebase.R;
 import in.rahul.chatappfirebase.activity.LoginActivity;
-import in.rahul.chatappfirebase.activity.RegisterActivity;
 
 public class RegisterFragment extends Fragment {
 
@@ -38,7 +36,7 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_register, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         username = view.findViewById(R.id.username);
         password = view.findViewById(R.id.password);

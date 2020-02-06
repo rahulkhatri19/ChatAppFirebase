@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red_light"
+    android:background="@color/voilet"
     android:orientation="vertical"
     tools:context=".activity.LoginActivity">
 
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:background="@drawable/btn_background"
-                android:text="Log In"
+                android:text="LogIn"
                 android:textAllCaps="false"
                 android:typeface="serif" />
 

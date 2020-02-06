@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -38,16 +37,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Chat App");
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  finish ();
-
-                Intent p = new Intent(MainActivity.this, LoginActivity.class);
-                p.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(p);
-            }
-        });
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //  finish ();
+//
+//                Intent p = new Intent(MainActivity.this, LoginActivity.class);
+//                p.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(p);
+//            }
+//        });
 
         viewPager = findViewById(R.id.viewPager);
 
@@ -127,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setTitle("Chat App");
-            ab.setDisplayHomeAsUpEnabled(true);
+//            ab.setDisplayHomeAsUpEnabled(true);
         }
     }
 
