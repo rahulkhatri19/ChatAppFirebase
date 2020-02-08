@@ -7,17 +7,19 @@
     android:orientation="vertical"
     android:weightSum="10"
     tools:context="in.rahul.chatappfirebase.activity.FriendRequestActivity">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="0.8"
-    android:textAlignment="center"
-    android:text="No User Found"
-    android:id="@+id/tv_noUser"
-    android:textSize="18sp"/>
-    <ListView
+
+    <TextView
+        android:id="@+id/tv_noUser"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9.2"
-        android:id="@+id/requestList"/>
+        android:layout_weight="0.8"
+        android:text="No User Found"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/requestList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9.2" />
 </LinearLayout>

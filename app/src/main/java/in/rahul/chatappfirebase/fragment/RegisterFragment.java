@@ -23,15 +23,23 @@ import com.firebase.client.Firebase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import in.rahul.chatappfirebase.R;
 import in.rahul.chatappfirebase.activity.LoginActivity;
 import in.rahul.chatappfirebase.activity.LoginRegActivity;
 
+import static in.rahul.chatappfirebase.utility.ApiList.profileUrl;
+import static in.rahul.chatappfirebase.utility.ApiList.statusUrl;
+import static in.rahul.chatappfirebase.utility.ApiList.usersDataUrl;
+import static in.rahul.chatappfirebase.utility.ApiList.usersUrl;
+
 public class RegisterFragment extends Fragment {
 
-    EditText username, password;
+    EditText etUserName, etPassword, etMobileNo, etName;
     Button registerButton;
-    String user, pass;
+    String stUserName, stPassword, stMobileNumber, stName;
 //    TextView login;
 
     @Nullable
@@ -39,8 +47,10 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        username = view.findViewById(R.id.username);
-        password = view.findViewById(R.id.password);
+        etUserName = view.findViewById(R.id.username);
+        etPassword = view.findViewById(R.id.password);
+        etMobileNo = view.findViewById(R.id.et_mobile_no);
+        etName = view.findViewById(R.id.et_name);
         registerButton = view.findViewById(R.id.registerButton);
 //        login = view.findViewById(R.id.login);
 
@@ -56,25 +66,36 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                user = username.getText().toString();
-                pass = password.getText().toString();
+                stUserName = etUserName.getText().toString();
+                stPassword = etPassword.getText().toString();
+                stName = etName.getText().toString();
+                stMobileNumber = etMobileNo.getText().toString();
 
-                if(user.equals("")){
-                    username.setError("This field is required");
-                }
-                else if(pass.equals("")){
-                    password.setError("This fileld is required");
-                }
-                else if(!user.matches("[A-Za-z0-9]+")){
-                    username.setError("Only letters and numbers");
-                }
-                else if(user.length()<4){
-                    username.setError("Please use at least 4 characters");
-                }
-                else if(pass.length()<4){
-                    password.setError("Please use at least 4 characters");
-                }
-                else {
+                if (stUserName.equals("")) {
+                    etUserName.setError("This field is required");
+                    etUserName.requestFocus();
+                } else if (stName.equals("")) {
+                    etName.setError("This fileld is required");
+                    etName.requestFocus();
+                } else if (stMobileNumber.equals("")) {
+                    etMobileNo.setError("This field is required");
+                    etMobileNo.requestFocus();
+                } else if (stPassword.equals("")) {
+                    etPassword.setError("This fileld is required");
+                    etPassword.requestFocus();
+                } else if (!stUserName.matches("[A-Za-z0-9]+")) {
+                    etUserName.setError("Only letters and numbers");
+                    etUserName.requestFocus();
+                } else if (stUserName.length() < 4) {
+                    etUserName.setError("Please use at least 4 characters");
+                    etUserName.requestFocus();
+                } else if (stPassword.length() < 4) {
+                    etPassword.setError("Please use at least 4 characters");
+                    etPassword.requestFocus();
+                } else if (stMobileNumber.length() != 10 && !stMobileNumber.matches("[0-9]")) {
+                    etMobileNo.setError("Invalid Mobile Number");
+                    etMobileNo.requestFocus();
+                } else {
                     registration();
                 }
             }
@@ -83,34 +104,49 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
-    protected void registration(){
+    protected void registration() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading");
         progressDialog.show();
 
-        // String url = "https://fir-chat-4efae.firebaseio.com/users.json";
-        String url = "https://chattapp-8f889.firebaseio.com/users.json";
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+        // String url = "https://fir-chat-4efae.firebaseio.com/users.json";  old url
+//        String url = "https://chattapp-8f889.firebaseio.com/users.json";
+        StringRequest request = new StringRequest(Request.Method.GET, usersDataUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String str) {
-                Firebase reference = new Firebase("https://chattapp-8f889.firebaseio.com/users");
+                Firebase reference = new Firebase(usersUrl);
+                Firebase referenceProfile = new Firebase(profileUrl);
 
 
-                if(str.equals("null")) {
-                    reference.child(user).child("password").setValue(pass);
+                if (str.equals("null")) {
+                    reference.child(stUserName).child("password").setValue(stPassword);
                     Toast.makeText(getActivity(), "Registration successful", Toast.LENGTH_LONG).show();
-                    Firebase status = new Firebase("https://chattapp-8f889.firebaseio.com/status");
-                    status.child(user).child("status").setValue("offline");
-                }
-                else {
+                    Firebase status = new Firebase(statusUrl);
+                    status.child(stUserName).child("status").setValue("offline");
+                } else {
                     try {
                         JSONObject object = new JSONObject(str);
 
-                        if (!object.has(user)) {
-                            reference.child(user).child("password").setValue(pass);
+                        if (!object.has(stUserName)) {
+                            Map<String, String> map = new HashMap<>();
+                            Map<String, String> mapProfile = new HashMap<>();
+                            map.put("password", stPassword);
+                            map.put("name", stName);
+                            map.put("phoneNumber", stMobileNumber);
+
+                            mapProfile.put("name", stName);
+                            mapProfile.put("phoneNumber", stMobileNumber);
+                            mapProfile.put("id", stUserName);
+                            reference.child(stUserName).setValue(map);
+                            referenceProfile.child(stUserName).setValue(mapProfile);
+//                             friend.child(UserDetails.friend).child(UserDetails.username).setValue(map);
+//                            reference.child(stUserName).child("password").setValue(stPassword);
+//                            reference.child(stUserName).child("name").setValue(stName);
+//                            reference.child(stUserName).child("phoneNumber").setValue(stMobileNumber);
                             Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_LONG).show();
-                            Firebase status = new Firebase("https://chattapp-8f889.firebaseio.com/status");
-                            status.child(user).child("status").setValue("offline");
+                            Firebase status = new Firebase(statusUrl);
+                            status.child(stUserName).child("status").setValue("offline");
+                            startActivity(new Intent(getActivity(), LoginRegActivity.class));
                         } else {
                             Toast.makeText(getActivity(), "Username already exists", Toast.LENGTH_LONG).show();
                         }
@@ -123,17 +159,15 @@ public class RegisterFragment extends Fragment {
                 progressDialog.dismiss();
             }
 
-        },new Response.ErrorListener(){
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                System.out.println("" + volleyError );
+                System.out.println("" + volleyError);
                 progressDialog.dismiss();
             }
         });
 
         RequestQueue rQueue = Volley.newRequestQueue(getActivity());
         rQueue.add(request);
-
-        startActivity(new Intent(getActivity(), LoginRegActivity.class));
     }
 }

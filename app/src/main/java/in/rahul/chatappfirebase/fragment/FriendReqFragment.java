@@ -169,8 +169,10 @@ public class FriendReqFragment extends Fragment {
                                     String name = "", phone = "", image = "", id = "";
                                     name = dataSnapshot.child("name").getValue().toString();
                                     phone = dataSnapshot.child("phoneNumber").getValue().toString();
-                                    image = dataSnapshot.child("image").getValue().toString();
                                     id = dataSnapshot.child("id").getValue().toString();
+                                    if (dataSnapshot.child("image").getValue() != null) {
+                                        image = dataSnapshot.child("image").getValue().toString();
+                                    }
 
                                     // phone= dataSnapshot.child("name").getValue().toString();
                                     /* Toast.makeText(getActivity(), "Profile name: " + name + " waytwo ", Toast.LENGTH_LONG).show();*/

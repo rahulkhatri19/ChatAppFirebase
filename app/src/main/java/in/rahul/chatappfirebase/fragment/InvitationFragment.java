@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,8 @@ public class InvitationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_invitation, container, false);
-        noUsers= view.findViewById(R.id.noUsersText);
-        recyclerView= view.findViewById(R.id.recycleView);
+        noUsers = view.findViewById(R.id.noUsersText);
+        recyclerView = view.findViewById(R.id.recycleView);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Please Wait ...");
         progressDialog.show();
@@ -65,14 +66,17 @@ public class InvitationFragment extends Fragment {
     }
 
     private void loadData() {
-        reference=FirebaseDatabase.getInstance().getReference("friendReqGot").child(UserDetails.username);
+        reference = FirebaseDatabase.getInstance().getReference("friendReqGot").child(UserDetails.username);
         reference.keepSynced(true);
 
-        FirebaseRecyclerOptions<FriendInviteModel> options= new FirebaseRecyclerOptions.Builder<FriendInviteModel>().setQuery(reference, FriendInviteModel.class).setLifecycleOwner(getActivity()).build();
+        FirebaseRecyclerOptions<FriendInviteModel> options = new FirebaseRecyclerOptions.Builder<FriendInviteModel>().setQuery(reference, FriendInviteModel.class).setLifecycleOwner(getActivity()).build();
         adapter = new FirebaseRecyclerAdapter<FriendInviteModel, UserInvitationHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull final UserInvitationHolder holder, int position, @NonNull final FriendInviteModel model) {
 
+//                if (model.getImage() != null || !model.getImage().equals("")){
+//                    holder.setImage(model.getImage());
+//                }
                 holder.setImage(model.getImage());
                 holder.setName(model.getName());
                 holder.setPhoneNumber(model.getPhoneNumber());
@@ -85,25 +89,24 @@ public class InvitationFragment extends Fragment {
                     public void onClick(View v) {
 
                         UserDetails.friend = model.getId();
-                        final DatabaseReference friend= FirebaseDatabase.getInstance().getReference("friend");
-                        DatabaseReference userData= FirebaseDatabase.getInstance().getReference("profile").child(UserDetails.username);
+                        final DatabaseReference friend = FirebaseDatabase.getInstance().getReference("friend");
+                        DatabaseReference userData = FirebaseDatabase.getInstance().getReference("profile").child(UserDetails.username);
                         userData.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String name="", phone="", image="", id="";
-                                name= dataSnapshot.child("name").getValue
-                                        ().toString();
-                                phone= dataSnapshot.child("phoneNumber").getValue().toString();
-                                image= dataSnapshot.child("image").getValue().toString();
-                                id= dataSnapshot.child("id").getValue().toString();
+                                String name = "", phone = "", image = "", id = "";
+                                name = dataSnapshot.child("name").getValue().toString();
+                                phone = dataSnapshot.child("phoneNumber").getValue().toString();
+                                image = dataSnapshot.child("image").getValue().toString();
+                                id = dataSnapshot.child("id").getValue().toString();
 
                                 // phone= dataSnapshot.child("name").getValue().toString();
-                               /* Toast.makeText(getActivity(), "Profile name: "+name+" waytwo ", Toast.LENGTH_LONG).show();*/
+                                /* Toast.makeText(getActivity(), "Profile name: "+name+" waytwo ", Toast.LENGTH_LONG).show();*/
                                 Map<String, String> map = new HashMap<>();
-                                map.put("id",id);
-                                map.put("image",image);
-                                map.put("name",name);
-                                map.put("phoneNumber",phone);
+                                map.put("id", id);
+                                map.put("image", image);
+                                map.put("name", name);
+                                map.put("phoneNumber", phone);
                                 friend.child(UserDetails.friend).child(UserDetails.username).setValue(map);
                             }
 
@@ -114,13 +117,13 @@ public class InvitationFragment extends Fragment {
                         });
 
                         Map<String, String> map = new HashMap<>();
-                        map.put("id",model.getId());
-                        map.put("image",model.getImage());
-                        map.put("name",model.getName());
-                        map.put("phoneNumber",model.getPhoneNumber());
+                        map.put("id", model.getId());
+                        map.put("image", model.getImage());
+                        map.put("name", model.getName());
+                        map.put("phoneNumber", model.getPhoneNumber());
                         friend.child(UserDetails.username).child(UserDetails.friend).setValue(map);
 
-                    //    Toast.makeText(getActivity(), "Yes it works", Toast.LENGTH_SHORT).show();
+                        //    Toast.makeText(getActivity(), "Yes it works", Toast.LENGTH_SHORT).show();
                         UserDetails.friend = model.getId();
                         startActivity(new Intent(getActivity(), ChatActivity.class));
                         reference.child(UserDetails.friend).removeValue();
@@ -139,7 +142,7 @@ public class InvitationFragment extends Fragment {
             @NonNull
             @Override
             public UserInvitationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.invitationl_request, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.invitationl_request, parent, false);
                 return new UserInvitationHolder(view);
             }
         };
@@ -147,32 +150,44 @@ public class InvitationFragment extends Fragment {
         progressDialog.dismiss();
     }
 
-    public static class UserInvitationHolder extends RecyclerView.ViewHolder{
-            View view;
-            TextView userName, userPhoneNumber;
-            Button requestBtn, cancelBtn;
-            public UserInvitationHolder(View itemView){
-                super(itemView);
-                view= itemView;
+    public static class UserInvitationHolder extends RecyclerView.ViewHolder {
+        View view;
+        TextView userName, userPhoneNumber;
+        Button requestBtn, cancelBtn;
+
+        public UserInvitationHolder(View itemView) {
+            super(itemView);
+            view = itemView;
+        }
+
+        public void setName(String name) {
+            userName = view.findViewById(R.id.name);
+            userName.setText(name);
+        }
+
+        public void setPhoneNumber(String phoneNumber) {
+            userPhoneNumber = view.findViewById(R.id.phoneNumber);
+            userPhoneNumber.setText(phoneNumber);
+        }
+
+        public void setImage(String profileImage) {
+            CircleImageView userImage = view.findViewById(R.id.profileImage);
+            Log.e("Invi", ":" + profileImage);
+            if (profileImage.equals("")) {
+                Picasso.get().load(R.drawable.profile_26).into(userImage);
+            } else {
+                Picasso.get().load(profileImage).placeholder(R.drawable.profile_26).into(userImage);
             }
-     public void setName(String name){
-     userName= view.findViewById(R.id.name);
-     userName.setText(name);
-     }
-     public void setPhoneNumber(String phoneNumber){
-     userPhoneNumber= view.findViewById(R.id.phoneNumber);
-     userPhoneNumber.setText(phoneNumber);
-     }
-     public void setImage(String profileImage){
-     CircleImageView userImage= view.findViewById(R.id.profileImage);
-     Picasso.get().load(profileImage).placeholder(R.drawable.profile_26).into(userImage);
-     }
-        public void setRequestButton(String btnRequest){
-            requestBtn=view.findViewById(R.id.btn_sendReq);
+
+        }
+
+        public void setRequestButton(String btnRequest) {
+            requestBtn = view.findViewById(R.id.btn_sendReq);
             requestBtn.setText(btnRequest);
         }
-        public void setCancelButton(String btnCancel){
-            cancelBtn=view.findViewById(R.id.btn_cancel);
+
+        public void setCancelButton(String btnCancel) {
+            cancelBtn = view.findViewById(R.id.btn_cancel);
             cancelBtn.setText(btnCancel);
         }
     }
