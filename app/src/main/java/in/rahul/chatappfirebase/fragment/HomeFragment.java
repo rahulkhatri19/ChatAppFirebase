@@ -218,7 +218,11 @@ public class HomeFragment extends Fragment {
 
         public void setImage(String profileImage) {
             CircleImageView userImage = view.findViewById(R.id.profileImage);
-            Picasso.get().load(profileImage).placeholder(R.drawable.profile_26).into(userImage);
+            if (profileImage.equals("")) {
+                Picasso.get().load(R.drawable.profile_26).into(userImage);
+            } else {
+                Picasso.get().load(profileImage).placeholder(R.drawable.profile_26).into(userImage);
+            }
         }
 
         public void setStatus(String status) {

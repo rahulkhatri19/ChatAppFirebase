@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import in.rahul.chatappfirebase.activity.LoginActivity;
 import in.rahul.chatappfirebase.activity.UserDetails;
@@ -76,9 +78,13 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     Toast.makeText(MainActivity.this, "You have Signed out.", Toast.LENGTH_SHORT).show();
                     new SharedPreferencesUtils(MainActivity.this).setLoginFlag(false);
+//                   user offline in Database
+                    DatabaseReference drOffline = FirebaseDatabase.getInstance().getReference("status");
+                    drOffline.child(UserDetails.username).child("status").setValue("offline");
+//                    removing username
+                    UserDetails.username = "";
                     // Close activity
                     finish();
-                    UserDetails.username = "";
                 }
             });
         }

@@ -97,8 +97,10 @@ public class InvitationFragment extends Fragment {
                                 String name = "", phone = "", image = "", id = "";
                                 name = dataSnapshot.child("name").getValue().toString();
                                 phone = dataSnapshot.child("phoneNumber").getValue().toString();
-                                image = dataSnapshot.child("image").getValue().toString();
                                 id = dataSnapshot.child("id").getValue().toString();
+                                if (dataSnapshot.child("image").getValue() != null){
+                                    image = dataSnapshot.child("image").getValue().toString();
+                                }
 
                                 // phone= dataSnapshot.child("name").getValue().toString();
                                 /* Toast.makeText(getActivity(), "Profile name: "+name+" waytwo ", Toast.LENGTH_LONG).show();*/
@@ -172,7 +174,6 @@ public class InvitationFragment extends Fragment {
 
         public void setImage(String profileImage) {
             CircleImageView userImage = view.findViewById(R.id.profileImage);
-            Log.e("Invi", ":" + profileImage);
             if (profileImage.equals("")) {
                 Picasso.get().load(R.drawable.profile_26).into(userImage);
             } else {

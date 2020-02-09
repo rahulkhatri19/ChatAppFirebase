@@ -10,7 +10,8 @@
     <in.rahul.chatappfirebase.utility.CircleImageView
         android:id="@+id/profileImage"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         android:layout_weight="3"
         android:src="@drawable/profile_26"

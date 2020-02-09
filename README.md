@@ -27,7 +27,7 @@ Android Chatting Application using Firebase as a realtime server. Features inclu
 
 - *model:* all model class of project.
 
-- *utils:* files which can be used in entire project. Circular Image view, SharedPrefrance.
+- *utils:* files which can be used in entire project. Circular Image view, SharedPrefrance, List of api.
 
 - *viewHolder:* Friend view holder. 
 

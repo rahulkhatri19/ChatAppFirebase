@@ -119,13 +119,13 @@ public class LoginFragment extends Fragment {
             @Override
             public void onResponse(String s) {
                 if (s.equals("null")) {
-                    Toast.makeText(getActivity(), "UserModel not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "User not found", Toast.LENGTH_LONG).show();
                 } else {
                     try {
                         JSONObject obj = new JSONObject(s);
 
                         if (!obj.has(user)) {
-                            Toast.makeText(getActivity(), "UserModel not found", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "User not found", Toast.LENGTH_LONG).show();
                         } else if (obj.getJSONObject(user).getString("password").equals(pass)) {
                             UserDetails.username = user;
                             UserDetails.password = pass;
