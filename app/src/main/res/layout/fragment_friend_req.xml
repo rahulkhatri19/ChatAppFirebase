@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#765CC8"
-    tools:context="in.belltechnology.chatappfirebase.fragment.FriendReqFragment">
+    tools:context="in.rahul.chatappfirebase.fragment.FriendReqFragment">
 
     <TextView
         android:id="@+id/noUsersText"
@@ -12,7 +12,7 @@
         android:text=""
         android:layout_marginTop="5dp"
         android:textAlignment="center"/>
-    <!--No User found!-->
+    <!--No UserModel found!-->
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

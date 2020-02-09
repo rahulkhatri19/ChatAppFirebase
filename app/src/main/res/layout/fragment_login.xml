@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/voilet"
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <!-- <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:weightSum="10">-->
+
+        <!--<TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/chat_app"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/chatWhite"
+            android:textSize="30sp"
+            android:textStyle="italic"
+            android:typeface="serif" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@null"
+                android:hint="User Name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/grey"
+                android:typeface="serif" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="8.5"
+                    android:background="@null"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/grey"
+                    android:typeface="serif" />
+
+                <ImageView
+                    android:id="@+id/hidePassword"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="1.5"
+                    android:src="@drawable/eye_invisible_32" />
+
+                <ImageView
+                    android:id="@+id/showPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="1.5"
+                    android:src="@drawable/eye_32"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/btn_background"
+                android:text="LogIn"
+                android:textAllCaps="false"
+                android:typeface="serif" />
+
+        </LinearLayout>
+
+        <!-- <TextView
+             android:id="@+id/register"
+             android:layout_width="match_parent"
+             android:layout_height="0dp"
+             android:layout_marginBottom="50dp"
+             android:layout_weight="1"
+             android:gravity="center_horizontal"
+             android:text="Click here to register"
+             android:textAlignment="center"
+             android:textColor="@android:color/white"
+             android:textSize="18sp"
+             android:typeface="serif" />-->
+        <!-- </LinearLayout>-->
+    </ScrollView>
+
+</LinearLayout>
