@@ -53,6 +53,9 @@ Screenshot
  <table>
   <tr>
     <td>
+      <img src="screenshot/chat_screen.png" width=250 />
+    </td>
+    <td>
       <img src="screenshot/friend_request_screen.png" width=250 />
     </td>
     <td>
